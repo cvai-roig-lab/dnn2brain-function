@@ -284,7 +284,7 @@ def main():
             print(roi)
             print(top3_dnns)
             vpart = variance_partitioning(top3_rdms,fmri_rdms[roi],'roi',stats_type)
-            result = vpart.get_unique_variance(num_permutations=2)
+            result = vpart.get_unique_variance(num_permutations=num_perm)
             vpart_results[roi] = result
             top3_dnns_perROI[roi] = top3_dnns
 
