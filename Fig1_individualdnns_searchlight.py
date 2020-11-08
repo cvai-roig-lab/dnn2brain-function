@@ -54,7 +54,7 @@ def display_3D_plot_individual_DNNs(task_list,p_values,lnc_sl,nc_threshold,\
                                     individual_variances,rsa_result_dir,brain_mask):
     # unique variance mask
     uvar_mask = np.argmax(individual_variances, axis=0).astype(np.float)
-    
+
     # task list with correct names
     task_list = ['autoencoding','object class', 'scene class', 'colorization','curvature',\
              'denoising', '2D edges', '3D edges', 'inpainting','2D keypoints', '3D keypoints', \
@@ -100,6 +100,8 @@ def main():
                         default = "D:/Projects/DNN_func2_brain_func/RDM_taskonomy_bonner50", type=str)
     parser.add_argument('--results_dir', help='results_dir', \
                         default = "./results/individual_DNNS_searchlight/", type=str)
+    parser.add_argument('--mask', help='brain mask path', \
+                        default = 'D:/Projects/DNN_func2_brain_func/fMRI_data/mask.nii', type=str)
     parser.add_argument('-np','--num_perm', help=' number of permutations to select for bootstrap',\
                         default = 10000, type=int)
     parser.add_argument('-stats','--stats', help=' t-test or permuting labels',\
@@ -127,7 +129,7 @@ def main():
     sl_rad = 1
     max_blk_edge = 2
     nc_threshold = 0.033
-    brain_mask = 'D:/Projects/DNN_func2_brain_func/fMRI_data/mask.nii'
+    brain_mask = args['mask']
 
     # result directory
     rsa_result_dir = os.path.join(args['results_dir'],'multiple_regression','-'.join(layers))
@@ -160,7 +162,7 @@ def main():
         individual_variances,p_values,p_values_diff,total_variance = result[0]
 
     # load noise ceiling
-    sl_dir = 'D:/Projects/DNN_func2_brain_func/quick_notebooks/subject_searchlight_rdms_pearson'
+    sl_dir = fMRI_RDMs_dir
     nc_dir = os.path.join(sl_dir,'sl_rad=' + str(sl_rad) + '__max_blk_edge=' + str(max_blk_edge))
     nc_result_file = os.path.join(nc_dir,'noise_ceiling.pkl')
     with open(nc_result_file, 'rb') as f:  # Python 3: open(..., 'rb')

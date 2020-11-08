@@ -105,6 +105,8 @@ def main():
                         default = "./results/grouped_DNNS_searchlight/", type=str)
     parser.add_argument('-np','--num_perm', help=' number of permutations to select for bootstrap',\
                         default = 10000, type=int)
+    parser.add_argument('--mask', help='brain mask path', \
+                        default = 'D:/Projects/DNN_func2_brain_func/fMRI_data/mask.nii', type=str)
     parser.add_argument('-stats','--stats', help=' t-test or permuting labels',\
                         default = 'permutation_labels', type=str)
     parser.add_argument('-bs_ratio','--bootstrap_ratio', help='ratio of conditions for bootstrap',\
@@ -130,7 +132,7 @@ def main():
     sl_rad = 1
     max_blk_edge = 2
     nc_threshold = 0.033
-    brain_mask = 'D:/Projects/DNN_func2_brain_func/fMRI_data/mask.nii'
+    brain_mask =  args['mask']
 
     # result directory
     rsa_result_dir = os.path.join(args['results_dir'],'vpart','-'.join(layers))
@@ -154,7 +156,7 @@ def main():
 
     individual_variances, p_values_individual_variances,p_values_diff,total_variance = result
 
-    sl_dir = 'D:/Projects/DNN_func2_brain_func/quick_notebooks/subject_searchlight_rdms_pearson'
+    sl_dir = fMRI_RDMs_dir
     nc_dir = os.path.join(sl_dir,'sl_rad=' + str(sl_rad) + '__max_blk_edge=' + str(max_blk_edge))
     nc_result_file = os.path.join(nc_dir,'noise_ceiling.pkl')
     with open(nc_result_file, 'rb') as f:  # Python 3: open(..., 'rb')
@@ -168,7 +170,6 @@ def main():
     display_3D_plot_grouped_DNNs(individual_variances,corrected_p_values_diff,\
                                 corrected_p_values,rsa_result_dir,\
                                 brain_mask,lnc_sl,nc_threshold)
-        
+
 if __name__ == "__main__":
     main()
-

@@ -150,6 +150,8 @@ def main():
                         default = "D:/Projects/DNN_func2_brain_func/ROI_masks/sabine_ROIs_RDMs_pearson", type=str)
     parser.add_argument('--DNN_RDM_dir', help='DNN_RDM_dir', \
                         default = "D:/Projects/DNN_func2_brain_func/RDM_taskonomy_bonner50", type=str)
+    parser.add_argument('--roi_labels', help='roi label file path', \
+                        default = "D:/Projects/DNN_func2_brain_func/ROI_masks/sabine_ROIs/ROIfiles_Labeling.txt", type=str)
     parser.add_argument('--results_dir', help='results_dir', \
                         default = "./results/grouped_DNNS_ROIs/", type=str)
     parser.add_argument('-np','--num_perm', help=' number of permutations to select for bootstrap',\
@@ -176,7 +178,7 @@ def main():
     bootstrap_ratio = args['bootstrap_ratio']
 
     # Loading ROI RDMs
-    roi_label_file = "D:/Projects/DNN_func2_brain_func/ROI_masks/sabine_ROIs/ROIfiles_Labeling.txt"
+    roi_label_file = args['roi_labels']
     roi_labels = pd.read_csv(roi_label_file)
     print(roi_labels)
     rois=roi_labels['roi']

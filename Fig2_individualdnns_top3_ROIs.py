@@ -67,10 +67,10 @@ def plot_top3(rois,results,top3_dnns_perROI,result_dir):
 
     ymax = 0.45
     count = 0
-    
+
     tasks = ['autoencoder','colorization','denoise','edge2d','inpainting_whole','keypoint2d','segment2d',\
          'edge3d','keypoint3d','segment25d','reshade', 'rgb2depth', 'rgb2mist', 'rgb2sfnorm','curvature',\
-         'class_1000', 'class_places', 'segmentsemantic','random'] 
+         'class_1000', 'class_places', 'segmentsemantic','random']
 
     tasks_names =  ['autoencoding','colorization','denoising','2D edges','inpainting','2D keypoints','2D segment', \
                            '3D edges',  '3D keypoints','2.5d segment', 'reshading', 'z-depth', 'distance', 'normals','curvature',\
@@ -179,7 +179,7 @@ def plot_top3(rois,results,top3_dnns_perROI,result_dir):
     fig.text(0.04, 0.5, 'Unique variance', va='center', rotation='vertical')
 
     plots_save_path = os.path.join(result_dir,"top3_dnns.svg")
-    
+
     plt.savefig(plots_save_path, bbox_inches="tight")
     plt.show()
 
@@ -209,6 +209,8 @@ def main():
                         default = "./results/individual_DNNS_ROIs/", type=str)
     parser.add_argument('-np','--num_perm', help=' number of permutations to select for bootstrap',\
                         default = 10000, type=int)
+    parser.add_argument('--roi_labels', help='roi label file path', \
+                        default = "D:/Projects/DNN_func2_brain_func/ROI_masks/sabine_ROIs/ROIfiles_Labeling.txt", type=str)
     parser.add_argument('-stats','--stats', help=' t-test or permuting labels',\
                         default = 'permutation_labels', type=str)
     parser.add_argument('-bs_ratio','--bootstrap_ratio', help='ratio of conditions for bootstrap',\
@@ -231,7 +233,7 @@ def main():
     bootstrap_ratio = args['bootstrap_ratio']
 
     # Loading ROI RDMs
-    roi_label_file = "D:/Projects/DNN_func2_brain_func/ROI_masks/sabine_ROIs/ROIfiles_Labeling.txt"
+    roi_label_file = args['roi_labels']
     roi_labels = pd.read_csv(roi_label_file)
     print(roi_labels)
     rois=roi_labels['roi']
