@@ -104,7 +104,7 @@ def main():
     parser.add_argument('--results_dir', help='results_dir', \
                         default = "./results/grouped_DNNS_searchlight/", type=str)
     parser.add_argument('-np','--num_perm', help=' number of permutations to select for bootstrap',\
-                        default = 10, type=int)
+                        default = 10000, type=int)
     parser.add_argument('-stats','--stats', help=' t-test or permuting labels',\
                         default = 'permutation_labels', type=str)
     parser.add_argument('-bs_ratio','--bootstrap_ratio', help='ratio of conditions for bootstrap',\
