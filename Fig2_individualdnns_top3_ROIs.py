@@ -10,12 +10,11 @@ from library.comparison_class import rsa,variance_partitioning,multiple_regressi
 from library.rdm_loader import get_taskonomy_RDMs_all_blocks_lt,get_fMRI_RDMs_per_subject_lt
 from matplotlib.patches import Patch
 from matplotlib.lines import Line2D
-def label_diff(ax,text,r1,r2,max_corr,yer1,yer2):
+def label_diff(ax,text,r1,r2,max_corr,yer1,yer2,ymax,barWidth):
 
     dx = int(abs((r1-r2))+0.1)
     y = max(max_corr+ yer2/2, max_corr+ yer1/2) + 0.1*dx*ymax
     x = r1 + dx/2.0
-    print(dx)
     lx = r1+0.1*barWidth
     rx = r1+dx*barWidth-0.1*barWidth
 
@@ -31,7 +30,7 @@ def label_diff(ax,text,r1,r2,max_corr,yer1,yer2):
     #ax.annotate('', xy=(r1+0.1*barWidth,y+ 0.02*ymax*dx), xytext=(r1+dx*barWidth-0.1*barWidth,y+ 0.02*ymax*dx), arrowprops=props)
 
 
-def label_against_zero(ax,i,text,r,bars,yer):
+def label_against_zero(ax,i,text,r,bars,yer,ymax):
     x = r - 0.04
     y = bars + yer/2 + 0.1*ymax
     ax.annotate(text, xy=(x,y), zorder=10)
@@ -66,6 +65,7 @@ def plot_top3(rois,results,top3_dnns_perROI,result_dir):
     cmaplist = create_color_map()
 
     ymax = 0.45
+    barWidth = 0.5
     count = 0
 
     tasks = ['autoencoder','colorization','denoise','edge2d','inpainting_whole','keypoint2d','segment2d',\
@@ -80,14 +80,15 @@ def plot_top3(rois,results,top3_dnns_perROI,result_dir):
     dorso_lateral = ['V1d','V2d','V3d','LO1','LO2','V3b','V3a',]
     parietal_frontal = ['IPS0','IPS1','IPS2','IPS3','IPS5','SPL1','FEF']
     good_rois = ventral_temporal + dorso_lateral
-
+    
+    print(good_rois)
+    
     patterns = [ "////" , "\\\\\\\\" , "||||" ]
     for r,roi in enumerate(rois):
         if roi in good_rois or roi == rois[6] or roi == rois[16]:
             individual_variances_mean,error_bars,p_values,p_values_diff,total_variances_mean = results[roi]
-            print(total_variances_mean['iv'].shape)
             correlation = individual_variances_mean[:3].ravel()
-            print(correlation)
+
             p_values = p_values.ravel()
             error_bar = error_bars.ravel()
 
@@ -123,7 +124,7 @@ def plot_top3(rois,results,top3_dnns_perROI,result_dir):
             for i,si in enumerate(indices):
                 if p_values[si]<0.05:
                     text = '*'
-                    label_against_zero(ax[row,col],i,text,range(len(correlation))[i],y[i],yers[i])
+                    label_against_zero(ax[row,col],i,text,range(len(correlation))[i],y[i],yers[i],ymax)
 
             max_corr = max(y)
             for si1 in indices:
@@ -135,7 +136,7 @@ def plot_top3(rois,results,top3_dnns_perROI,result_dir):
                             text = '*'
                             #barplot_annotate_brackets(si1, si2, text, range(len(correlation)), list(y))
 
-                            label_diff(ax[row,col],text,si1,si2,max_corr,yers[si1],yers[si2])
+                            label_diff(ax[row,col],text,si1,si2,max_corr,yers[si1],yers[si2],ymax,barWidth)
 
             ax[row,col].spines["top"].set_visible(False)
             ax[row,col].spines["right"].set_visible(False)
@@ -239,6 +240,7 @@ def main():
     rois=roi_labels['roi']
     roi_ids=roi_labels['id']
 
+
     # result directory
     rsa_result_dir = os.path.join(args['results_dir'],'multiple_regression','-'.join(layers))
     if not os.path.exists(rsa_result_dir):
@@ -294,6 +296,7 @@ def main():
     else:
         with open(vpart_file_name, 'rb') as f:  # Python 3: open(..., 'rb')
             rois,vpart_results,top3_dnns_perROI = pickle.load(f)
+
     plot_top3(rois,vpart_results,top3_dnns_perROI,rsa_result_dir)
 
 if __name__ == "__main__":

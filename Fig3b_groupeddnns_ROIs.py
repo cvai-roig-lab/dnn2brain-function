@@ -39,7 +39,31 @@ def get_grouped_rdms(task_list_nogeometry,taskonomy_RDM_dir,layers):
                     list(rdms_3d/float(len(tasks_3D))),\
                     list(rdms_sem/float(len(tasks_semantic)))]
     return grouped_rdms
+def label_diff(ax,text,r1,r2,max_corr,yer1,yer2,ymax,barWidth):
 
+    dx = int(abs((r1-r2))+0.1)
+    y = max(max_corr+ yer2/2, max_corr+ yer1/2) + 0.1*dx*ymax
+    x = r1 + dx/2.0
+    print(dx)
+    lx = r1+0.1*barWidth
+    rx = r1+dx*barWidth-0.1*barWidth
+
+    barh = 0.05*ymax*dx
+    barx = [lx, lx, rx, rx]
+    bary = [y, y+barh, y+barh, y]
+    mid = ((lx+rx)/2, y+barh)
+
+    ax.plot(barx, bary, c='black',linewidth=0.1)
+    #props = {'connectionstyle':'bar','arrowstyle':'-',\
+    #             'shrinkA':0.01/dx,'shrinkB':0.05/dx,'linewidth':1}
+    ax.annotate(text, xy=(x,y+ 1.2*barh ), zorder=10)
+    #ax.annotate('', xy=(r1+0.1*barWidth,y+ 0.02*ymax*dx), xytext=(r1+dx*barWidth-0.1*barWidth,y+ 0.02*ymax*dx), arrowprops=props)
+
+
+def label_against_zero(ax,i,text,r,bars,yer,ymax,barWidth):
+    x = r - 0.04
+    y = bars + yer/2 + 0.1*ymax
+    ax.annotate(text, xy=(x,y), zorder=10)
 
 def plot_allrois(rois,results,rsa_result_dir):
     ventral_temporal = ['V1v','V2v','V3v','hV4','VO1','VO2','PHC1','PHC2']
@@ -50,6 +74,7 @@ def plot_allrois(rois,results,rsa_result_dir):
     fig,ax = plt.subplots( nrows=4, ncols=4 , sharex=True, sharey=True)
     count =0
     ymax = 0.32
+    barWidth = 0.33
     models = ['2d','3d','semantic']
     color = [(0,0,1), (0,1,0), (1,0,1)]
     uvar_2D = []
@@ -85,7 +110,7 @@ def plot_allrois(rois,results,rsa_result_dir):
             for i,si in enumerate(indices):
                 if p_values[si]<0.05:
                     text = '*'
-                    label_against_zero(ax[row,col],i,text,range(len(correlation))[i],y[i],yers[i])
+                    label_against_zero(ax[row,col],i,text,range(len(correlation))[i],y[i],yers[i],ymax,barWidth)
 
             max_corr = max(y)
             for si1 in indices:
@@ -97,7 +122,7 @@ def plot_allrois(rois,results,rsa_result_dir):
                             text = '*'
                             #barplot_annotate_brackets(si1, si2, text, range(len(correlation)), list(y))
 
-                            label_diff(ax[row,col],text,si1,si2,max_corr,yers[si1],yers[si2])
+                            label_diff(ax[row,col],text,si1,si2,max_corr,yers[si1],yers[si2],ymax,barWidth)
 
             ax[row,col].spines["top"].set_visible(False)
             ax[row,col].spines["right"].set_visible(False)
