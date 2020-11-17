@@ -1,5 +1,5 @@
 # dnn-to-brain-function
-<a href="https://arxiv.org/abs/2008.02107"> Unveiling functions of the visual cortex using task-specific deep neural networks
+<a href="https://sites.google.com/view/dnn2brainfunction/home"> Unveiling functions of the visual cortex using task-specific deep neural networks
 </a><br/>
 Kshitij Dwivedi, Michael F. Bonner, Radoslaw Martin Cichy, Gemma Roig <br/>
 Journal X 2021<br/><br/>
