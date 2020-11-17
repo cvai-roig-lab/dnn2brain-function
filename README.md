@@ -33,6 +33,9 @@ We generate a functional map of visual cortex in following steps:
 * Activate environment ```conda activate dnn2brain```
 * Download the data (searchlight and ROI RDMs) from this <a href="https://www.dropbox.com/s/hehc4h8qale0lo9/data.zip?dl=0">link </a> , and save it in the root directory (./) 
 
+## Requirements
+RAM: 16 GB, NVIDIA-GPU
+
 ## Generate results
 * Run ```python Fig1_individualdnns_searchlight.py``` to generate searchlight results using individual taskonomy DNNs. After the code is successfully run, a new tab will open in default browser displaying an interactive functional map.
 * Run ```python Fig2_individualdnns_top3_ROIs.py``` to generate ROI results using best predicting individual taskonomy DNNs.
