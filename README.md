@@ -31,7 +31,9 @@ We generate a functional map of visual cortex in following steps:
 * Install anaconda
 * Run ```conda create --name dnn2brain --file requirements.txt``` to setup a new conda environment with required libraries
 * Activate environment ```conda activate dnn2brain```
-* Download the data (searchlight and ROI RDMs) from this <a href="https://www.dropbox.com/s/hehc4h8qale0lo9/data.zip?dl=0">link </a> , and save it in the root directory (./) 
+* Clone the repository ```git clone https://github.com/kshitijd20/dnn-to-brain-function```
+* Change working directory ```cd dnn-to-brain-function```
+* Download the data (searchlight and ROI RDMs) from this <a href="https://www.dropbox.com/s/hehc4h8qale0lo9/data.zip?dl=0">link </a> , and save it in the project root directory (./) 
 
 ## Requirements
 RAM: 16 GB, NVIDIA-GPU
