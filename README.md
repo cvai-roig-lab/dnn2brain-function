@@ -16,8 +16,6 @@ We generate a functional map of visual cortex in following steps:
 
 * Highlighting the cortical region by color code corresponding to the best predicting DNN  
 
-* To assess similarity between two tasks, we extract the features of the Deep Neural Networks(DNNs) trained on these tasks
-
 
 <div align="center">
   <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/kshitijd20/dnn-to-brain-function/blob/main/figures/methods-vid.gif">
@@ -39,10 +37,19 @@ We generate a functional map of visual cortex in following steps:
 RAM: 16 GB, NVIDIA-GPU
 
 ## Generate results
-* Run ```python Fig1_individualdnns_searchlight.py``` to generate searchlight results using individual taskonomy DNNs. After the code is successfully run, a new tab will open in default browser displaying an interactive functional map.
-* Run ```python Fig2_individualdnns_top3_ROIs.py``` to generate ROI results using best predicting individual taskonomy DNNs.
+* Run ```python Fig1_individualdnns_searchlight.py``` to generate searchlight results using individual taskonomy DNNs. After the code is successfully run, a new tab will open in default browser displaying an interactive functional map. The functional map should match with Figure 1b of the paper shown below. 
+<div align="center">
+  <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/kshitijd20/dnn-to-brain-function/blob/main/figures/Figure1.png">
+</div>
+* Run ```python Fig2_individualdnns_top3_ROIs.py``` to generate ROI results using best predicting individual taskonomy DNNs. The ROI plots should mathc with Figure 2b of the paper shown below.
+<div align="center">
+  <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/kshitijd20/dnn-to-brain-function/blob/main/figures/Figure2.png">
+</div>
 * Run ```python Fig3a_groupeddnns_searchlight``` to generate searchlight results using grouped taskonomy DNNs (2D, 3D, and semantic). After the code is successfully run, a new tab will open in default browser displaying an interactive functional map.
-* Run ```python Fig3b_groupeddnns_ROIs.py``` to generate ROI results using grouped taskonomy DNNs (2D, 3D, and semantic).
+* Run ```python Fig3b_groupeddnns_ROIs.py``` to generate ROI results using grouped taskonomy DNNs (2D, 3D, and semantic). The searchlight and ROI plots should match with Figure3a and 3b of the paper shown below.
+<div align="center">
+  <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/kshitijd20/dnn-to-brain-function/blob/main/figures/Figure3.png">
+</div>
 
 ## Cite
 
