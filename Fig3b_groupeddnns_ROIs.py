@@ -172,15 +172,15 @@ def plot_allrois(rois,results,rsa_result_dir):
 def main():
     parser = argparse.ArgumentParser(description='ROI analysis with tasknomy grouped RDMs')
     parser.add_argument('--fMRI_RDMs_dir', help='fMRI_RDMs_dir',\
-                        default = "D:/Projects/DNN_func2_brain_func/ROI_masks/sabine_ROIs_RDMs_pearson", type=str)
+                        default = "./data/kastner_ROIs_RDMs_pearson", type=str)
     parser.add_argument('--DNN_RDM_dir', help='DNN_RDM_dir', \
-                        default = "D:/Projects/DNN_func2_brain_func/RDM_taskonomy_bonner50", type=str)
+                        default = "./data/RDM_taskonomy_bonner50", type=str)
     parser.add_argument('--roi_labels', help='roi label file path', \
-                        default = "D:/Projects/DNN_func2_brain_func/ROI_masks/sabine_ROIs/ROIfiles_Labeling.txt", type=str)
+                        default = "./data/ROIfiles_Labeling.txt", type=str)
     parser.add_argument('--results_dir', help='results_dir', \
                         default = "./results/grouped_DNNS_ROIs/", type=str)
     parser.add_argument('-np','--num_perm', help=' number of permutations to select for bootstrap',\
-                        default = 10, type=int)
+                        default = 10000, type=int)
     parser.add_argument('-stats','--stats', help=' t-test or permuting labels',\
                         default = 'permutation_labels', type=str)
     parser.add_argument('-bs_ratio','--bootstrap_ratio', help='ratio of conditions for bootstrap',\

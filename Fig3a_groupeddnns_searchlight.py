@@ -102,15 +102,15 @@ def display_3D_plot_grouped_DNNs(individual_variances,p_values_diff_masked,\
 def main():
     parser = argparse.ArgumentParser(description='searchlight analysis with tasknomy grouped RDMs')
     parser.add_argument('--fMRI_RDMs_dir', help='fMRI_RDMs_dir',\
-                        default = "D:/Projects/DNN_func2_brain_func/quick_notebooks/subject_searchlight_rdms_pearson", type=str)
+                        default = "./data", type=str)
     parser.add_argument('--DNN_RDM_dir', help='DNN_RDM_dir', \
-                        default = "D:/Projects/DNN_func2_brain_func/RDM_taskonomy_bonner50", type=str)
+                        default = "./data/RDM_taskonomy_bonner50", type=str)
     parser.add_argument('--results_dir', help='results_dir', \
                         default = "./results/grouped_DNNS_searchlight/", type=str)
     parser.add_argument('-np','--num_perm', help=' number of permutations to select for bootstrap',\
                         default = 10000, type=int)
     parser.add_argument('--mask', help='brain mask path', \
-                        default = 'D:/Projects/DNN_func2_brain_func/fMRI_data/mask.nii', type=str)
+                        default = './data/mask.nii', type=str)
     parser.add_argument('-stats','--stats', help=' t-test or permuting labels',\
                         default = 'permutation_labels', type=str)
     parser.add_argument('-bs_ratio','--bootstrap_ratio', help='ratio of conditions for bootstrap',\
