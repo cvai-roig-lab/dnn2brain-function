@@ -65,7 +65,7 @@ def plot_top3(rois,results,top3_dnns_perROI,result_dir):
     cmaplist = create_color_map()
 
     ymax = 0.45
-    barWidth = 0.5
+    barWidth = 1
     count = 0
 
     tasks = ['autoencoder','colorization','denoise','edge2d','inpainting_whole','keypoint2d','segment2d',\
