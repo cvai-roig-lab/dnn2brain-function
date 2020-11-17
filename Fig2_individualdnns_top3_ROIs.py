@@ -53,7 +53,7 @@ def create_color_map():
     for color in crange_sem:
         cmapsem.append((color, 0, color, 1.0))
 
-    cmaplist =[(.8, .8, .8, 1.0)]+cmap2D+cmap3D+cmapsem + [(.8, .80, 0, 1.0)]
+    cmaplist =cmap2D+cmap3D+cmapsem + [(.8, .80, 0, 1.0)]
     return cmaplist
 
 
@@ -80,9 +80,9 @@ def plot_top3(rois,results,top3_dnns_perROI,result_dir):
     dorso_lateral = ['V1d','V2d','V3d','LO1','LO2','V3b','V3a',]
     parietal_frontal = ['IPS0','IPS1','IPS2','IPS3','IPS5','SPL1','FEF']
     good_rois = ventral_temporal + dorso_lateral
-    
+
     print(good_rois)
-    
+
     patterns = [ "////" , "\\\\\\\\" , "||||" ]
     for r,roi in enumerate(rois):
         if roi in good_rois or roi == rois[6] or roi == rois[16]:
@@ -177,7 +177,7 @@ def plot_top3(rois,results,top3_dnns_perROI,result_dir):
             top=False,         # ticks along the top edge are off
             labelbottom=False)
     #ax[3,3].set_yticks([])
-    fig.text(0.04, 0.5, 'Unique variance', va='center', rotation='vertical')
+    fig.text(0.04, 0.5, 'Unique variance '+"$ (R^{2})$", va='center', rotation='vertical')
 
     plots_save_path = os.path.join(result_dir,"top3_dnns.svg")
 
@@ -260,7 +260,7 @@ def main():
             print(key,np.array(value).shape)
             individual_rdms.append(np.array(value))
 
-        # preparing results for rois
+        # preparing results for rois, doing regression to find best predicting DNNs
         results = {}
         for roi in rois:
             print(roi,fmri_rdms[roi].shape)
@@ -276,10 +276,13 @@ def main():
         with open(result_file_name, 'rb') as f:  # Python 3: open(..., 'rb')
             rois,results = pickle.load(f)
 
+
     vpart_file_name = os.path.join(rsa_result_dir,'roi_top3_'+ stats_type +'.pkl')
     if not os.path.exists(vpart_file_name):
         vpart_results = {}
         top3_dnns_perROI = {}
+        # Performing variance partitioning to find unique and shared variance explained by
+        # top-3 best predicting DNNS
         for roi in rois:
             print("---------------------------------------------------------------------")
             top3_rdms, top3_dnns = get_top3rdms(roi,results[roi],taskonomy_rdms,task_list_nogeometry)
@@ -297,6 +300,7 @@ def main():
         with open(vpart_file_name, 'rb') as f:  # Python 3: open(..., 'rb')
             rois,vpart_results,top3_dnns_perROI = pickle.load(f)
 
+    # plottting the unique variance of top3 RDMs
     plot_top3(rois,vpart_results,top3_dnns_perROI,rsa_result_dir)
 
 if __name__ == "__main__":

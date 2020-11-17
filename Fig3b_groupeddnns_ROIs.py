@@ -39,12 +39,12 @@ def get_grouped_rdms(task_list_nogeometry,taskonomy_RDM_dir,layers):
                     list(rdms_3d/float(len(tasks_3D))),\
                     list(rdms_sem/float(len(tasks_semantic)))]
     return grouped_rdms
+
 def label_diff(ax,text,r1,r2,max_corr,yer1,yer2,ymax,barWidth):
 
     dx = int(abs((r1-r2))+0.1)
     y = max(max_corr+ yer2/2, max_corr+ yer1/2) + 0.1*dx*ymax
     x = r1 + dx/2.0
-    print(dx)
     lx = r1+0.1*barWidth
     rx = r1+dx*barWidth-0.1*barWidth
 
@@ -60,7 +60,7 @@ def label_diff(ax,text,r1,r2,max_corr,yer1,yer2,ymax,barWidth):
     #ax.annotate('', xy=(r1+0.1*barWidth,y+ 0.02*ymax*dx), xytext=(r1+dx*barWidth-0.1*barWidth,y+ 0.02*ymax*dx), arrowprops=props)
 
 
-def label_against_zero(ax,i,text,r,bars,yer,ymax,barWidth):
+def label_against_zero(ax,i,text,r,bars,yer,ymax):
     x = r - 0.04
     y = bars + yer/2 + 0.1*ymax
     ax.annotate(text, xy=(x,y), zorder=10)
@@ -74,7 +74,7 @@ def plot_allrois(rois,results,rsa_result_dir):
     fig,ax = plt.subplots( nrows=4, ncols=4 , sharex=True, sharey=True)
     count =0
     ymax = 0.32
-    barWidth = 0.33
+    barWidth = 1
     models = ['2d','3d','semantic']
     color = [(0,0,1), (0,1,0), (1,0,1)]
     uvar_2D = []
@@ -110,7 +110,7 @@ def plot_allrois(rois,results,rsa_result_dir):
             for i,si in enumerate(indices):
                 if p_values[si]<0.05:
                     text = '*'
-                    label_against_zero(ax[row,col],i,text,range(len(correlation))[i],y[i],yers[i],ymax,barWidth)
+                    label_against_zero(ax[row,col],i,text,range(len(correlation))[i],y[i],yers[i],ymax)
 
             max_corr = max(y)
             for si1 in indices:
@@ -136,7 +136,7 @@ def plot_allrois(rois,results,rsa_result_dir):
             #plt.ylabel('Task type', axes=ax[row,col])
             ax[row,col].set_ylim([0,ymax])
             #plt.legend(labels, ['2D', '3D','semantic','geometric'])
-            ax[row,col].set_title(roi + ": $r^{2}=$" +  str( round(total_variances_mean['tv'][0],2)),x=0.38, y=0.85)#,loc = 'left')
+            ax[row,col].set_title(roi + ": $R^{2}=$" +  str( round(total_variances_mean['tv'][0],2)),x=0.38, y=0.85)#,loc = 'left')
             ax[row,col].tick_params(
             axis='x',          # changes apply to the x-axis
             which='both',      # both major and minor ticks are affected
@@ -163,7 +163,7 @@ def plot_allrois(rois,results,rsa_result_dir):
             top=False,         # ticks along the top edge are off
             labelbottom=False)
     #ax[3,3].set_yticks([])
-    fig.text(0.04, 0.5, 'Unique variance', va='center', rotation='vertical')
+    fig.text(0.04, 0.5, 'Unique variance '+"$ (R^{2})$", va='center', rotation='vertical')
 
     plots_save_path = os.path.join(rsa_result_dir,"vpart.svg")
     plt.savefig(plots_save_path, bbox_inches="tight")
@@ -221,7 +221,8 @@ def main():
         # taskonomy grouped RDMs
         grouped_rdms = get_grouped_rdms(task_list_nogeometry,taskonomy_RDM_dir,layers)
         fmri_rdms = get_fMRI_RDMs_per_subject_lt(fMRI_RDMs_dir,rois)
-
+        # Performing variance partitioning to find unique and shared variance explained by
+        # top-3 best predicting DNNS
         results = {}
         for roi in rois:
             vpart = variance_partitioning(grouped_rdms,fmri_rdms[roi],'roi',stats_type)
@@ -237,6 +238,7 @@ def main():
         with open(result_file_name, 'rb') as f:  # Python 3: open(..., 'rb')
             rois,results = pickle.load(f)
 
+    # plottting the unique variance explained by grouped RDMs
     plot_allrois(rois,results,rsa_result_dir)
 
 if __name__ == "__main__":

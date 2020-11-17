@@ -70,7 +70,7 @@ def display_3D_plot_individual_DNNs(task_list,p_values,lnc_sl,nc_threshold,\
     for s in range(uvar_mask.shape[0]):
         max_id = int(uvar_mask[s])
 
-        if  lnc_sl[s]<nc_threshold or p_values[max_id,s]>0.05:
+        if lnc_sl[s]<nc_threshold or p_values[max_id,s]>0.05:
             uvar_mask_map[s] = -9
         else:
             uvar_mask_map[s] = task_list_reordered.index(task_list[max_id])-8
@@ -80,7 +80,7 @@ def display_3D_plot_individual_DNNs(task_list,p_values,lnc_sl,nc_threshold,\
     cmap = create_color_map()
     view = plotting.view_img_on_surf(nii_save_path, threshold=None, surf_mesh='fsaverage',\
                                 vmax=10,vmin=-9,symmetric_cmap=False,cmap=cmap,\
-                                title = 'Functional map: individual DNNs')
+                                title = 'Functional map: individual DNNs',colorbar=False)
     view.open_in_browser()
 
 def apply_fdr_correction_searchlight(p_values, lnc_sl, nc_threshold):
@@ -172,6 +172,7 @@ def main():
     # apply fdr correction
     corrected_p_values = apply_fdr_correction_searchlight(p_values, lnc_sl, nc_threshold)
 
+    # display 3D interactive plot in browser
     display_3D_plot_individual_DNNs(task_list_nogeometry,corrected_p_values,lnc_sl,nc_threshold,\
                                     individual_variances,rsa_result_dir,brain_mask)
 

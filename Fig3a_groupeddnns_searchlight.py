@@ -10,6 +10,7 @@ from library.rdm_loader import get_taskonomy_RDMs_all_blocks_lt, get_searchlight
 from library.searchlight_utils import *
 from statsmodels.stats.multitest import fdrcorrection
 from nilearn import plotting
+from statsmodels.sandbox.stats.multicomp import multipletests
 
 def get_grouped_rdms(task_list_nogeometry,taskonomy_RDM_dir,layers):
     tasks_2D =['autoencoder', 'colorization','denoise', 'edge2d',  \
@@ -61,8 +62,11 @@ def apply_fdr_correction_searchlight_diff(p_values_diff, individual_variances, \
     masked_pvalues = p_values_diff_masked[lnc_sl>nc_threshold]
     print(masked_pvalues.shape)
     _ , masked_pvalues_corrected = fdrcorrection(masked_pvalues)
+    print(masked_pvalues_corrected.min(),masked_pvalues_corrected.max())
     p_values_diff_masked[lnc_sl>nc_threshold] = masked_pvalues_corrected
     return  p_values_diff_masked
+
+
 
 def save_searchlight_nii(brain_mask, data, save_path,\
                          sl_rad = 1, max_blk_edge = 2):
@@ -92,7 +96,7 @@ def display_3D_plot_grouped_DNNs(individual_variances,p_values_diff_masked,\
     plt.close('all')
     view = plotting.view_img_on_surf(nii_save_path, threshold=None, surf_mesh='fsaverage',\
                                     vmax=0.75, vmin=-0.75, symmetric_cmap=False,cmap=mycmap,\
-                                    title = 'Functional map: grouped DNNs ')
+                                    title = 'Functional map: grouped DNNs ', colorbar=False)
     view.open_in_browser()
 
 def main():
@@ -156,6 +160,7 @@ def main():
 
     individual_variances, p_values_individual_variances,p_values_diff,total_variance = result
 
+    # Load noise ceiling
     sl_dir = fMRI_RDMs_dir
     nc_dir = os.path.join(sl_dir,'sl_rad=' + str(sl_rad) + '__max_blk_edge=' + str(max_blk_edge))
     nc_result_file = os.path.join(nc_dir,'noise_ceiling.pkl')
@@ -163,10 +168,15 @@ def main():
         nc_result = pickle.load(f)
         lnc_sl, unc_sl = nc_result
 
+    # apply FDR correction to p-values against zero
     corrected_p_values = apply_fdr_correction_searchlight(p_values_individual_variances, lnc_sl, nc_threshold)
     print("shape of p values :", corrected_p_values.shape)
+
+    # apply FDR correction to p-values against each other
     corrected_p_values_diff = apply_fdr_correction_searchlight_diff(p_values_diff,individual_variances,\
                                                                     lnc_sl, nc_threshold)
+
+    #  display 3D interactive plot in browser
     display_3D_plot_grouped_DNNs(individual_variances,corrected_p_values_diff,\
                                 corrected_p_values,rsa_result_dir,\
                                 brain_mask,lnc_sl,nc_threshold)
