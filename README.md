@@ -22,13 +22,6 @@ We generate a functional map of the visual cortex following the below steps:
   <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/kshitijd20/dnn-to-brain-function/blob/main/figures/methods-vid.gif">
 </div>
 
-<br/><br/>
-<div align="center">
-  <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/kshitijd20/dnn-to-brain-function/blob/main/figures/background.gif">
-</div>
-<br/><br/>
-
-
 ## Setup
 * Install anaconda
 * Clone the repository ```git clone https://github.com/kshitijd20/dnn-to-brain-function```
