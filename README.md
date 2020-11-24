@@ -56,7 +56,7 @@ RAM: 16 GB, NVIDIA-GPU
 
 <br/><br/>
 
-* Run ```python Fig3a_groupeddnns_searchlight.py``` to generate searchlight results using grouped taskonomy DNNs (2D, 3D, and semantic). After the code is successfully run, a new tab will open in default browser displaying an interactive functional map. The ROI plots should match with Figure3a of the paper shown below
+* Run ```python Fig3a_groupeddnns_searchlight.py``` to generate searchlight results using grouped taskonomy DNNs (2D, 3D, and semantic). After the code is successfully run, a new tab will open in default browser displaying an interactive functional map. The functional map should match with Figure3a of the paper shown below
 * Run ```python Fig3b_groupeddnns_ROIs.py``` to generate ROI results using grouped taskonomy DNNs (2D, 3D, and semantic). The ROI plots should match with Figure3b of the paper shown below.
 
 
@@ -64,7 +64,8 @@ RAM: 16 GB, NVIDIA-GPU
   <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/kshitijd20/dnn-to-brain-function/blob/main/figures/Figure3.png">
 </div>
 
-
+## Acknowledgement
+Some parts of the code are borrowed from <a href="https://brainiak.org/">Brainiak toolbox</a> 
 
 ## Cite
 
