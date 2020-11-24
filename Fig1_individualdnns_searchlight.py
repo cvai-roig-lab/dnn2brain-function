@@ -19,6 +19,14 @@ from library.rdm_loader import get_taskonomy_RDMs_all_blocks_lt,get_searchlight_
 from library.searchlight_utils import *
 
 def create_color_map():
+    """Creates colormap with different shades for different type of tasks.
+
+    Returns
+    -------
+    colormap object
+        colormap with different shades for different type of tasks.
+
+    """
     cmap = plt.cm.get_cmap('tab20b')
 
     crange_2D = np.linspace(0.3, 1.0, num=7)
@@ -45,6 +53,24 @@ def create_color_map():
 
 def save_searchlight_nii(brain_mask, data, save_path,\
                          sl_rad = 1, max_blk_edge = 2):
+    """Short summary.
+
+    Parameters
+    ----------
+    brain_mask : string
+        path to nii file of brain mask
+    data : np.array
+        searchlight results to be mapped back on brain
+    save_path : string
+        path to save resulting searchlight nii file
+    max_blk_edge : int
+        searchlight parameter
+
+    Returns
+    -------
+    None
+
+    """
     img = nib.load(brain_mask)
     functional_map =  blocks2sl(brain_mask,data,sl_rad,max_blk_edge)
     task_specificity_map_nii = nib.Nifti1Image(functional_map, img.affine, img.header)
@@ -52,6 +78,29 @@ def save_searchlight_nii(brain_mask, data, save_path,\
 
 def display_3D_plot_individual_DNNs(task_list,p_values,lnc_sl,nc_threshold,\
                                     individual_variances,rsa_result_dir,brain_mask):
+    """Short summary.
+
+    Parameters
+    ----------
+    task_list : list
+        List of tasks.
+    p_values : np.array
+        p values of significance of R2 against zero
+    lnc_sl : np.array
+        Lower noise ceiling bound.
+    nc_threshold : float
+        Noise ceiling threshold
+    individual_variances: np.array
+        searchlight result
+    rsa_result_dir : string
+        directory to save results
+    brain_mask : string
+        Path to nii file.
+
+    Returns
+    -------
+    None
+    """
     # unique variance mask
     uvar_mask = np.argmax(individual_variances, axis=0).astype(np.float)
 
@@ -84,6 +133,24 @@ def display_3D_plot_individual_DNNs(task_list,p_values,lnc_sl,nc_threshold,\
     view.open_in_browser()
 
 def apply_fdr_correction_searchlight(p_values, lnc_sl, nc_threshold):
+    """Apply FDR correction to correct for number of searchlights.
+
+    Parameters
+    ----------
+    p_values : np.array
+        p values of significance of R2 against zero
+    lnc_sl : np.array
+        Lower noise ceiling bound.
+    nc_threshold : float
+        Noise ceiling threshold
+
+    Returns
+    -------
+    np.array
+        FDR corrected p values
+
+    """
+
     num_tasks = p_values.shape[0]
     for t in range(num_tasks):
         masked_pvalues = p_values.T[:,t][lnc_sl>nc_threshold]

@@ -11,6 +11,23 @@ from matplotlib.patches import Patch
 from matplotlib.lines import Line2D
 
 def get_grouped_rdms(task_list_nogeometry,taskonomy_RDM_dir,layers):
+    """To convert individual DNN RDMs to grouped DNN RDMs.
+
+    Parameters
+    ----------
+    task_list_nogeometry : list
+        List of tasks.
+    taskonomy_RDM_dir : string
+        path to Taskonomy DNN RDM directory
+    layers : list
+        List of layers to use.
+
+    Returns
+    -------
+    lsit of list
+        List of grouped RDMs into 2D,3D, and semantic.
+
+    """
     tasks_2D =['autoencoder', 'colorization','denoise', 'edge2d',  \
                 'inpainting_whole','keypoint2d', 'segment2d']
     tasks_3D = ['curvature', 'edge3d','reshade', 'rgb2depth', \
@@ -41,7 +58,8 @@ def get_grouped_rdms(task_list_nogeometry,taskonomy_RDM_dir,layers):
     return grouped_rdms
 
 def label_diff(ax,text,r1,r2,max_corr,yer1,yer2,ymax,barWidth):
-
+    """Function to annotate significance between two bars.
+    """
     dx = int(abs((r1-r2))+0.1)
     y = max(max_corr+ yer2/2, max_corr+ yer1/2) + 0.1*dx*ymax
     x = r1 + dx/2.0
@@ -61,11 +79,29 @@ def label_diff(ax,text,r1,r2,max_corr,yer1,yer2,ymax,barWidth):
 
 
 def label_against_zero(ax,i,text,r,bars,yer,ymax):
+    """Function to annotate significance of a bar against zero.
+    """
     x = r - 0.04
     y = bars + yer/2 + 0.1*ymax
     ax.annotate(text, xy=(x,y), zorder=10)
 
 def plot_allrois(rois,results,rsa_result_dir):
+    """Short summary.
+
+    Parameters
+    ----------
+    rois : list
+        List of ROIs
+    results : result object
+        result of all rois.
+    rsa_result_dir : string
+        directory to save results
+
+    Returns
+    -------
+    None
+
+    """
     ventral_temporal = ['V1v','V2v','V3v','hV4','VO1','VO2','PHC1','PHC2']
     dorso_lateral = ['V1d','V2d','V3d','LO1','LO2','V3b','V3a',]
     parietal_frontal = ['IPS0','IPS1','IPS2','IPS3','IPS5','SPL1','FEF']

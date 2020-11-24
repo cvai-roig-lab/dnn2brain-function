@@ -11,9 +11,11 @@ from library.rdm_loader import get_taskonomy_RDMs_all_blocks_lt,get_fMRI_RDMs_pe
 from matplotlib.patches import Patch
 from matplotlib.lines import Line2D
 def label_diff(ax,text,r1,r2,max_corr,yer1,yer2,ymax,barWidth):
+    """Function to annotate significance between two bars.
+    """
 
     dx = int(abs((r1-r2))+0.1)
-    y = max(max_corr+ yer2/2, max_corr+ yer1/2) + 0.1*dx*ymax
+    y = max(max_corr+ yer2/2, max_corr+ yer1/2) + 0.1*dx*y1max
     x = r1 + dx/2.0
     lx = r1+0.1*barWidth
     rx = r1+dx*barWidth-0.1*barWidth
@@ -24,18 +26,25 @@ def label_diff(ax,text,r1,r2,max_corr,yer1,yer2,ymax,barWidth):
     mid = ((lx+rx)/2, y+barh)
 
     ax.plot(barx, bary, c='black',linewidth=0.1)
-    #props = {'connectionstyle':'bar','arrowstyle':'-',\
-    #             'shrinkA':0.01/dx,'shrinkB':0.05/dx,'linewidth':1}
     ax.annotate(text, xy=(x,y+ 1.2*barh ), zorder=10)
-    #ax.annotate('', xy=(r1+0.1*barWidth,y+ 0.02*ymax*dx), xytext=(r1+dx*barWidth-0.1*barWidth,y+ 0.02*ymax*dx), arrowprops=props)
-
 
 def label_against_zero(ax,i,text,r,bars,yer,ymax):
+    """Function to annotate significance of a bar against zero.
+    """
+
     x = r - 0.04
     y = bars + yer/2 + 0.1*ymax
     ax.annotate(text, xy=(x,y), zorder=10)
 
 def create_color_map():
+    """Creates colormap with different shades for different type of tasks.
+
+    Returns
+    -------
+    list
+        colormap with different shades for different type of tasks.
+
+    """
     cmap = plt.cm.get_cmap('tab20b')
 
     crange_2D = np.linspace(0.3, 1.0, num=7)
@@ -59,6 +68,23 @@ def create_color_map():
 
 
 def plot_top3(rois,results,top3_dnns_perROI,result_dir):
+    """Generate plot showing unique variance explained by top-3 DNNs for 15 ROIs.
+
+    Parameters
+    ----------
+    rois : list
+        List of ROIs
+    results :
+        Unique variance results
+    top3_dnns_perROI : list of list
+        List of top3 best predicting DNNs for each ROI
+    result_dir : string
+        directory to save results
+
+    Returns
+    -------
+    None
+    """
     top3dnns_roi = {}
     plt.rcParams.update({'font.size': 6})
     fig,ax = plt.subplots( nrows=4, ncols=4 , sharex=True, sharey=True)
@@ -188,6 +214,26 @@ def plot_top3(rois,results,top3_dnns_perROI,result_dir):
 
 
 def get_top3rdms(roi,results,taskonomy_rdms_all_blocks,task_list_nogeometry):
+    """Get RDMs corresponding to top 3 best predicting RDMs.
+
+    Parameters
+    ----------
+    roi : string
+        Name of `roi`.
+    results : rsa results object
+        Results of R2 predicted by all the considered DNNs for a given ROI
+    taskonomy_rdms_all_blocks : dict
+        Dictionary containing taskonomy RDMs .
+    task_list_nogeometry : list
+        List of tasks.
+
+    Returns
+    -------
+    type
+        Description of returned object.
+
+    """
+
     k = 3
     top3_rdms = []
     top3_dnns = []

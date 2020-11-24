@@ -13,6 +13,23 @@ from nilearn import plotting
 from statsmodels.sandbox.stats.multicomp import multipletests
 
 def get_grouped_rdms(task_list_nogeometry,taskonomy_RDM_dir,layers):
+    """To convert individual DNN RDMs to grouped DNN RDMs.
+
+    Parameters
+    ----------
+    task_list_nogeometry : list
+        List of tasks.
+    taskonomy_RDM_dir : string
+        path to Taskonomy DNN RDM directory
+    layers : list
+        List of layers to use.
+
+    Returns
+    -------
+    lsit of list
+        List of grouped RDMs into 2D,3D, and semantic.
+
+    """
     tasks_2D =['autoencoder', 'colorization','denoise', 'edge2d',  \
                 'inpainting_whole','keypoint2d', 'segment2d']
     tasks_3D = ['curvature', 'edge3d','reshade', 'rgb2depth', \
@@ -43,6 +60,23 @@ def get_grouped_rdms(task_list_nogeometry,taskonomy_RDM_dir,layers):
     return grouped_rdms
 
 def apply_fdr_correction_searchlight(p_values, lnc_sl, nc_threshold):
+    """Apply FDR correction to correct for number of searchlights.
+
+    Parameters
+    ----------
+    p_values : np.array
+        p values of significance of unique variance against zero
+    lnc_sl : np.array
+        Lower noise ceiling bound.
+    nc_threshold : float
+        Noise ceiling threshold
+
+    Returns
+    -------
+    np.array
+        FDR corrected p values
+
+    """
     num_tasks = p_values.shape[0]
     for t in range(num_tasks):
         masked_pvalues = p_values.T[:,t][lnc_sl>nc_threshold]
@@ -53,6 +87,25 @@ def apply_fdr_correction_searchlight(p_values, lnc_sl, nc_threshold):
 
 def apply_fdr_correction_searchlight_diff(p_values_diff, individual_variances, \
                                           lnc_sl, nc_threshold):
+    """Apply FDR correction on differences to correct for number of searchlights.
+
+    Parameters
+    ----------
+    p_values_diff : np.array
+        p values of significance of difference against other DNNs
+    individual_variances : np.array
+        unique variance explained by different DNNs for each searchlight
+    lnc_sl : np.array
+        Lower noise ceiling bound.
+    nc_threshold : float
+        Noise ceiling threshold
+
+    Returns
+    -------
+    np.array
+        FDR corrected p values
+
+    """
     individual_variances_unique = individual_variances[:3,:]
     uvar_mask = np.argmax(individual_variances_unique, axis=0).astype(np.float)
     p_values_diff_masked = np.zeros(individual_variances_unique.shape[1])
@@ -70,6 +123,24 @@ def apply_fdr_correction_searchlight_diff(p_values_diff, individual_variances, \
 
 def save_searchlight_nii(brain_mask, data, save_path,\
                          sl_rad = 1, max_blk_edge = 2):
+    """Short summary.
+
+    Parameters
+    ----------
+    brain_mask : string
+        path to nii file of brain mask
+    data : np.array
+        searchlight results to be mapped back on brain
+    save_path : string
+        path to save resulting searchlight nii file
+    max_blk_edge : int
+        searchlight parameter
+
+    Returns
+    -------
+    None
+
+    """
     img = nib.load(brain_mask)
     functional_map =  blocks2sl(brain_mask,data,sl_rad,max_blk_edge)
     task_specificity_map_nii = nib.Nifti1Image(functional_map, img.affine, img.header)
@@ -78,6 +149,30 @@ def save_searchlight_nii(brain_mask, data, save_path,\
 def display_3D_plot_grouped_DNNs(individual_variances,p_values_diff_masked,\
                                 p_values_individual_variances,result_dir,\
                                 brain_mask,lnc_sl, nc_threshold):
+    """Short summary.
+
+    Parameters
+    ----------
+    individual_variances : np.array
+        unique variance explained by different DNNs for each searchlight
+    p_values_diff_masked : np.array
+        p values of significance of difference against other DNNs
+    p_values_individual_variances :  np.array
+        p values of significance of unique variance against zero
+    result_dir : string
+        directory to save results
+    brain_mask : string
+        path to nii file of brain mask
+    lnc_sl : np.array
+        Lower noise ceiling bound.
+    nc_threshold : float
+        Noise ceiling threshold
+    Returns
+    -------
+    None
+
+    """
+
     individual_variances_unique = individual_variances[:3,:]
     uvar_mask = np.argmax(individual_variances_unique, axis=0).astype(np.float)
     for s in range(uvar_mask.shape[0]):
