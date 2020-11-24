@@ -15,7 +15,7 @@ def label_diff(ax,text,r1,r2,max_corr,yer1,yer2,ymax,barWidth):
     """
 
     dx = int(abs((r1-r2))+0.1)
-    y = max(max_corr+ yer2/2, max_corr+ yer1/2) + 0.1*dx*y1max
+    y = max(max_corr+ yer2/2, max_corr+ yer1/2) + 0.1*dx*ymax
     x = r1 + dx/2.0
     lx = r1+0.1*barWidth
     rx = r1+dx*barWidth-0.1*barWidth
