@@ -192,6 +192,9 @@ def display_3D_plot_grouped_DNNs(individual_variances,p_values_diff_masked,\
     view = plotting.view_img_on_surf(nii_save_path, threshold=None, surf_mesh='fsaverage',\
                                     vmax=0.75, vmin=-0.75, symmetric_cmap=False,cmap=mycmap,\
                                     title = 'Functional map: grouped DNNs ', colorbar=False)
+    view_save_path = os.path.join(result_dir,'grouped_dnns.html')
+    view.save_as_html('viewer.html')
+    print("Results saved in this directory: ", result_dir)
     view.open_in_browser()
 
 def main():

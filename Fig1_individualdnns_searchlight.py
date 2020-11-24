@@ -126,10 +126,14 @@ def display_3D_plot_individual_DNNs(task_list,p_values,lnc_sl,nc_threshold,\
 
     nii_save_path =  os.path.join(rsa_result_dir,'rsa_task_specificity_map.nii')
     save_searchlight_nii(brain_mask, uvar_mask_map, nii_save_path)
+
     cmap = create_color_map()
     view = plotting.view_img_on_surf(nii_save_path, threshold=None, surf_mesh='fsaverage',\
                                 vmax=10,vmin=-9,symmetric_cmap=False,cmap=cmap,\
                                 title = 'Functional map: individual DNNs',colorbar=False)
+    view_save_path = os.path.join(rsa_result_dir,'individual_dnns.html')
+    view.save_as_html('viewer.html')
+    print("Results saved in this directory: ", rsa_result_dir)
     view.open_in_browser()
 
 def apply_fdr_correction_searchlight(p_values, lnc_sl, nc_threshold):

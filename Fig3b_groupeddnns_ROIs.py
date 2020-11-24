@@ -203,6 +203,7 @@ def plot_allrois(rois,results,rsa_result_dir):
 
     plots_save_path = os.path.join(rsa_result_dir,"vpart.svg")
     plt.savefig(plots_save_path, bbox_inches="tight")
+    print("Results saved in this directory: ", rsa_result_dir)
     plt.show()
 
 def main():

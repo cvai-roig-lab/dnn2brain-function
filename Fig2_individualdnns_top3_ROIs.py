@@ -208,6 +208,7 @@ def plot_top3(rois,results,top3_dnns_perROI,result_dir):
     plots_save_path = os.path.join(result_dir,"top3_dnns.svg")
 
     plt.savefig(plots_save_path, bbox_inches="tight")
+    print("Results saved in this directory: ", result_dir)
     plt.show()
 
 
