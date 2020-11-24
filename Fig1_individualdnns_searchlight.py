@@ -132,7 +132,7 @@ def display_3D_plot_individual_DNNs(task_list,p_values,lnc_sl,nc_threshold,\
                                 vmax=10,vmin=-9,symmetric_cmap=False,cmap=cmap,\
                                 title = 'Functional map: individual DNNs',colorbar=False)
     view_save_path = os.path.join(rsa_result_dir,'individual_dnns.html')
-    view.save_as_html('viewer.html')
+    view.save_as_html(view_save_path)
     print("Results saved in this directory: ", rsa_result_dir)
     view.open_in_browser()
 
