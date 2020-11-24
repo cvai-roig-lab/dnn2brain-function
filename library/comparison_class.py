@@ -106,6 +106,6 @@ class multiple_regression:
             result =  perform_permutation_test(self.model_rdms,self.fmri_rdm,\
                                                self.analysis_type,self.function,\
                                                 num_permutations = num_permutations,\
-                                                bootstrap_ratio = 0.9,\
-                                                FDR_threshold = 0.05)
+                                                bootstrap_ratio = bootstrap_ratio,\
+                                                FDR_threshold = FDR_threshold)
         return result
