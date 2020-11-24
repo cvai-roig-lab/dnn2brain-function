@@ -2,11 +2,11 @@
 <a href="https://sites.google.com/view/dnn2brainfunction/home"> Unveiling functions of the visual cortex using task-specific deep neural networks
 </a><br/>
 Kshitij Dwivedi, Michael F. Bonner, Radoslaw Martin Cichy, Gemma Roig <br/>
-Journal X 2021<br/><br/>
+(Under submission)<br/><br/>
 
 
 Here we provide the code to reproduce our key results from the paper. 
-We generate a functional map of visual cortex in following steps:
+We generate a functional map of the visual cortex following the below steps:
 
 * Extract activations from multiple DNNs and responses of a cortical region for all the images in the stimulus set
 
@@ -37,7 +37,7 @@ We generate a functional map of visual cortex in following steps:
 RAM: 16 GB, NVIDIA-GPU
 
 ## Generate results
-* Run ```python Fig1_individualdnns_searchlight.py``` to generate searchlight results using individual taskonomy DNNs. After the code is successfully run, a new tab will open in default browser displaying an interactive functional map. The functional map should match with Figure 1b of the paper shown below. 
+* Run ```python Fig1_individualdnns_searchlight.py``` to generate searchlight results using individual taskonomy DNNs. After the code is successfully run, a new tab will open in default browser displaying an interactive functional map. The functional map should match with Figure 1d of the paper shown below. 
 
 
 <div align="center">
@@ -45,7 +45,7 @@ RAM: 16 GB, NVIDIA-GPU
 </div>
 
 <br/><br/>
-* Run ```python Fig2_individualdnns_top3_ROIs.py``` to generate ROI results using best predicting individual taskonomy DNNs. The ROI plots should mathc with Figure 2b of the paper shown below.
+* Run ```python Fig2_individualdnns_top3_ROIs.py``` to generate ROI results using best predicting individual taskonomy DNNs. The ROI plots should match with Figure 2b of the paper shown below.
 
 
 <div align="center">
@@ -54,8 +54,8 @@ RAM: 16 GB, NVIDIA-GPU
 
 <br/><br/>
 
-* Run ```python Fig3a_groupeddnns_searchlight``` to generate searchlight results using grouped taskonomy DNNs (2D, 3D, and semantic). After the code is successfully run, a new tab will open in default browser displaying an interactive functional map.
-* Run ```python Fig3b_groupeddnns_ROIs.py``` to generate ROI results using grouped taskonomy DNNs (2D, 3D, and semantic). The searchlight and ROI plots should match with Figure3a and 3b of the paper shown below.
+* Run ```python Fig3a_groupeddnns_searchlight.py``` to generate searchlight results using grouped taskonomy DNNs (2D, 3D, and semantic). After the code is successfully run, a new tab will open in default browser displaying an interactive functional map. The ROI plots should match with Figure3a of the paper shown below
+* Run ```python Fig3b_groupeddnns_ROIs.py``` to generate ROI results using grouped taskonomy DNNs (2D, 3D, and semantic). The ROI plots should match with Figure3b of the paper shown below.
 
 
 <div align="center">
@@ -66,7 +66,7 @@ RAM: 16 GB, NVIDIA-GPU
 
 ## Cite
 
-If you use our code please consider citing the paper below
+If you use our code, partly or as is,  please cite the paper below
 
 ```
 @inproceedings{dwivedi2020DDS,
