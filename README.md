@@ -6,6 +6,7 @@ Kshitij Dwivedi, Michael F. Bonner, Radoslaw Martin Cichy, Gemma Roig <br/>
 
 
 Here we provide the code to reproduce our key results from the paper. 
+
 We generate a functional map of the visual cortex following the below steps:
 
 * Extract activations from multiple DNNs and responses of a cortical region for all the images in the stimulus set
@@ -20,10 +21,6 @@ We generate a functional map of the visual cortex following the below steps:
 <div align="center">
   <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/kshitijd20/dnn-to-brain-function/blob/main/figures/methods-vid.gif">
 </div>
-
-
-<br/><br/>
-
 
 ## Setup
 * Install anaconda
