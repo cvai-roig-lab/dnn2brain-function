@@ -10,59 +10,6 @@ from library.ordinary_least_squares import OLS_pytorch
 from tqdm import tqdm
 from scipy.stats import spearmanr
 
-
-def pearsons_pytorch(sl_rdms_lt, dnn_rdm_lt):
-    dim = -1
-    #print(sl_rdms_lt.shape)
-    dnn_rdm_lt = dnn_rdm_lt.view(sl_rdms_lt.shape[1], -1)
-    x = sl_rdms_lt
-    y = dnn_rdm_lt.T
-    centered_x = x - x.mean(dim=dim, keepdim=True)
-    centered_y = y - y.mean(dim=dim, keepdim=True)
-
-    covariance = (centered_x * centered_y).sum(dim=dim, keepdim=True)
-
-    bessel_corrected_covariance = covariance / (x.shape[dim] - 1)
-
-    x_std = x.std(dim=dim, keepdim=True)
-    y_std = y.std(dim=dim, keepdim=True)
-
-    corr = bessel_corrected_covariance / (x_std * y_std)
-
-    return corr
-
-
-
-
-def return_ranks_sl(array):
-    if len(array.shape)==1:
-        array = np.expand_dims(array,axis=0)
-    num_sl_cubes = array.shape[0]
-    #print(array.shape)
-    rank_array = np.empty_like(array)
-    for i in range(num_sl_cubes):
-        temp = array[i,:].argsort()
-        ranks = np.empty_like(temp)
-        ranks[temp] = np.arange(array.shape[1])
-        rank_array[i,:] = ranks
-    return rank_array
-
-def return_ranks(array):
-    temp = array.argsort()
-    ranks = np.empty_like(temp)
-    ranks[temp] = np.arange(len(array))
-    return ranks
-
-def multimodel_rsa(ind_vars, dep_var):
-    correlations = []
-
-    for i,ind_var_rank in (enumerate(ind_vars)):
-         fast_sl_result = pearsons_pytorch(dep_var,ind_var_rank)
-         correlations.append(fast_sl_result.cpu().detach().numpy().ravel())
-    correlations = np.array(correlations)
-    #print("correlations shape is" , correlations.shape)
-    return correlations,correlations**2
-
 def multiple_regression_rsa(ind_vars, dep_var):
     """Return R and R2.
 
@@ -87,17 +34,6 @@ def multiple_regression_rsa(ind_vars, dep_var):
     correlations[correlations<0] = 0
     correlations = np.sqrt(correlations)
     return correlations,correlations**2
-
-def multiple_regression_rsa_with_baseline(ind_vars, dep_var):
-    correlations = []
-
-    for i,ind_var in (enumerate(ind_vars[:-1])):
-        ind_var_with_baseline = ind_var + ind_vars[:-1]
-        fast_sl_result,_ = vpart2(dep_var,ind_var)
-        correlations.append(fast_sl_result[0])
-    correlations = np.array(correlations)
-    #print("correlations shape is" , correlations.shape)
-    return correlations,correlations
 
 def vpart2(ind_vars, dep_var):
     """Return unique and shared variance with 2 independent variables.
@@ -132,6 +68,20 @@ def vpart2(ind_vars, dep_var):
     return individual_variances, total_variance
 
 def get_adjusted_rsquare(ind_var,dep_var):
+    """Returns adjusted R2.
+
+    Parameters
+    ----------
+    ind_vars : list
+        list of independent variables (usually model RDMs).
+    dep_var : np.array
+        dependent variable (model RDM).
+
+    Returns
+    -------
+        adjusted R2.
+
+    """
     lm = OLS_pytorch()
     model = lm.fit(ind_var.T,dep_var)
     R= lm.score()
