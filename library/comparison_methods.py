@@ -46,6 +46,7 @@ def return_ranks_sl(array):
         ranks[temp] = np.arange(array.shape[1])
         rank_array[i,:] = ranks
     return rank_array
+
 def return_ranks(array):
     temp = array.argsort()
     ranks = np.empty_like(temp)
@@ -63,6 +64,21 @@ def multimodel_rsa(ind_vars, dep_var):
     return correlations,correlations**2
 
 def multiple_regression_rsa(ind_vars, dep_var):
+    """Return R and R2.
+
+    Parameters
+    ----------
+    ind_vars : list
+        list of independent variables (usually model RDMs).
+    dep_var : np.array
+        dependent variable (model RDM).
+
+    Returns
+    -------
+    tuple
+        R and R2.
+
+    """
     correlations = []
     for i,ind_var in (enumerate(ind_vars)):
         fast_sl_result = get_adjusted_rsquare(ind_var,dep_var)
@@ -84,6 +100,21 @@ def multiple_regression_rsa_with_baseline(ind_vars, dep_var):
     return correlations,correlations
 
 def vpart2(ind_vars, dep_var):
+    """Return unique and shared variance with 2 independent variables.
+
+    Parameters
+    ----------
+    ind_vars : list
+        list of independent variables (usually model RDMs).
+    dep_var : np.array
+        dependent variable (model RDM).
+
+    Returns
+    -------
+    tuple
+        unique variance and total variance.
+
+    """
     ind_var = np.array(ind_vars[0]+ind_vars[1])
     R12 = get_adjusted_rsquare(ind_var,dep_var)
 
@@ -111,6 +142,21 @@ def get_adjusted_rsquare(ind_var,dep_var):
     return R
 
 def vpart3(ind_vars, dep_var):
+    """Return unique and shared variance with 3 independent variables.
+
+    Parameters
+    ----------
+    ind_vars : list
+        list of independent variables (usually model RDMs).
+    dep_var : np.array
+        dependent variable (model RDM).
+
+    Returns
+    -------
+    tuple
+        unique variance and total variance.
+
+    """
     ind_var = np.array(ind_vars[0]+ind_vars[1]+ind_vars[2])
     #print("vpart3 ind var shape, dep var shape: ", ind_var.shape,dep_var.shape)
     R123 = get_adjusted_rsquare(ind_var,dep_var)
@@ -146,6 +192,21 @@ def vpart3(ind_vars, dep_var):
     return individual_variances[:3],total_variance
 
 def vpart_general(ind_vars, dep_var):
+    """Return unique and shared variance with n independent variables.
+
+    Parameters
+    ----------
+    ind_vars : list
+        list of independent variables (usually model RDMs).
+    dep_var : np.array
+        dependent variable (model RDM).
+
+    Returns
+    -------
+    tuple
+        unique variance and total variance.
+
+    """
     all_ind_var = []
     for i in range(len(ind_vars)):
         all_ind_var = all_ind_var + ind_vars[i]
