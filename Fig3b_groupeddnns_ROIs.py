@@ -5,7 +5,7 @@ import pickle
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-from library.comparison_class import rsa,variance_partitioning,multiple_regression
+from library.comparison_class import variance_partitioning,multiple_regression
 from library.rdm_loader import get_taskonomy_RDMs_all_blocks_lt,get_fMRI_RDMs_per_subject_lt
 from matplotlib.patches import Patch
 from matplotlib.lines import Line2D

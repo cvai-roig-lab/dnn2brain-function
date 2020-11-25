@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 from statsmodels.stats.multitest import fdrcorrection
 
 from nilearn import plotting
-from library.comparison_class import rsa,multiple_regression
+from library.comparison_class import multiple_regression
 from library.rdm_loader import get_taskonomy_RDMs_all_blocks_lt,get_searchlight_rdms_persub
 from library.searchlight_utils import *
 
