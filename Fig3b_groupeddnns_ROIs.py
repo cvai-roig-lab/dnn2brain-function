@@ -259,7 +259,7 @@ def main():
         grouped_rdms = get_grouped_rdms(task_list_nogeometry,taskonomy_RDM_dir,layers)
         fmri_rdms = get_fMRI_RDMs_per_subject_lt(fMRI_RDMs_dir,rois)
         # Performing variance partitioning to find unique and shared variance explained by
-        # top-3 best predicting DNNS
+        # grouped RDMs (2D, 3D, and semantic)
         results = {}
         for roi in rois:
             vpart = variance_partitioning(grouped_rdms,fmri_rdms[roi],'roi',stats_type)
