@@ -72,16 +72,7 @@ Some parts of the code are borrowed from <a href="https://brainiak.org/">Brainia
 If you use our code, partly or as is,  please cite the paper below
 
 ```
-@inproceedings{dwivedi2020DDS,
-  title={Duality Diagram Similarity: a generic framework for initialization
-               selection in task transfer learning},
-  author={Kshitij Dwivedi and
-               Jiahui Huang and
-               Radoslaw Martin Cichy and
-               Gemma Roig},
-  booktitle={Proceedings of the European Conference on Computer Vision (ECCV)},
-  year={2020}
-}
+To be updated
 
 ```
 
