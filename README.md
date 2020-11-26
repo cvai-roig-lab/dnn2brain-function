@@ -19,7 +19,7 @@ We generate a functional map of the visual cortex following the below steps:
 
 
 <div align="center">
-  <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/kshitijd20/dnn-to-brain-function/blob/main/figures/methods-vid.gif">
+  <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/cvai-repo/dnn2brain-function/blob/main/figures/methods-vid.gif">
 </div>
 
 ## Setup
@@ -43,7 +43,7 @@ RAM: 16 GB, NVIDIA-GPU
 
 
 <div align="center">
-  <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/kshitijd20/dnn-to-brain-function/blob/main/figures/Figure1.png">
+  <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/cvai-repo/dnn2brain-function/blob/main/figures/Figure1.png">
 </div>
 
 <br/><br/>
@@ -51,7 +51,7 @@ RAM: 16 GB, NVIDIA-GPU
 
 
 <div align="center">
-  <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/kshitijd20/dnn-to-brain-function/blob/main/figures/Figure2.png">
+  <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/cvai-repo/dnn2brain-function/blob/main/figures/Figure2.png">
 </div>
 
 <br/><br/>
@@ -61,7 +61,7 @@ RAM: 16 GB, NVIDIA-GPU
 
 
 <div align="center">
-  <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/kshitijd20/dnn-to-brain-function/blob/main/figures/Figure3.png">
+  <img width="80%" alt="DNN-fMRI comparison" src="https://github.com/cvai-repo/dnn2brain-function/blob/main/figures/Figure3.png">
 </div>
 
 ## Acknowledgement
