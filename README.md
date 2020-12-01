@@ -2,7 +2,7 @@
 <a href="https://sites.google.com/view/dnn2brainfunction/home"> Unveiling functions of the visual cortex using task-specific deep neural networks
 </a><br/>
 Kshitij Dwivedi, Michael F. Bonner, Radoslaw Martin Cichy, Gemma Roig <br/>
-(Under submission)<br/><br/>
+<a href="https://www.biorxiv.org/content/10.1101/2020.11.27.401380v1">preprint </a><br/><br/>
 
 
 Here we provide the code to reproduce our key results from the paper. 
@@ -33,7 +33,7 @@ We generate a functional map of the visual cortex following the below steps:
 * Run ```conda create --name dnn2brain --file requirements.txt``` to setup a new conda environment with required libraries
 * Activate environment ```conda activate dnn2brain``` 
 * Install <a href="https://nilearn.github.io/introduction.html#installation">nilearn </a> and <a href="https://github.com/tqdm/tqdm">tqdm </a>
-* Download the data (searchlight and ROI RDMs) from this <a href="https://www.dropbox.com/s/hehc4h8qale0lo9/data.zip?dl=0">link </a> , and save it in the project root directory (./) 
+* Download the data (searchlight and ROI RDMs) either from <a href="https://www.dropbox.com/s/hehc4h8qale0lo9/data.zip?dl=0">dropbox</a> or  <a href="https://osf.io/dj7v2/">osf</a>, and save it in the project root directory (./) 
 
 ## Requirements
 RAM: 16 GB, NVIDIA-GPU
@@ -72,7 +72,17 @@ Some parts of the code are borrowed from <a href="https://brainiak.org/">Brainia
 If you use our code, partly or as is,  please cite the paper below
 
 ```
-To be updated
+@article {Dwivedi2020.11.27.401380,
+	author = {Dwivedi, Kshitij and Bonner, Michael F. and Cichy, Radoslaw Martin and Roig, Gemma},
+	title = {Unveiling functions of the visual cortex using task-specific deep neural networks},
+	elocation-id = {2020.11.27.401380},
+	year = {2020},
+	doi = {10.1101/2020.11.27.401380},
+	publisher = {Cold Spring Harbor Laboratory},
+	URL = {https://www.biorxiv.org/content/early/2020/11/27/2020.11.27.401380},
+	eprint = {https://www.biorxiv.org/content/early/2020/11/27/2020.11.27.401380.full.pdf},
+	journal = {bioRxiv}
+}
 
 ```
 
